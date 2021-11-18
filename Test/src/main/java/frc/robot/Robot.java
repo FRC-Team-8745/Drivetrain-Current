@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,6 +18,9 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  public static Compressor compressor = new Compressor(0);
+
+
   @Override
   public void robotInit() {}
 
@@ -30,12 +34,17 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    DrivetrianJoystick.initialize();
+    compressor.stop();
+    //test.drive();
+    
+  }
 
   @Override
   public void teleopPeriodic() {
-    DriveTrain.drive();
-  }
+    DrivetrianJoystick.drive();
+  } 
 
   @Override
   public void disabledInit() {}
