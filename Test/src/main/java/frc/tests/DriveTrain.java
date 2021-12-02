@@ -1,3 +1,4 @@
+/*
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -19,28 +20,24 @@ public class DriveTrain {
     public static Solenoid raiseFront = new Solenoid(4);
     public static Solenoid raiseBack = new Solenoid(5);
 
-
     public static void drive() {
 
         double speedModifierElevator = 0.25;
         double speedModifierDriving = 0.3;
-        beakOpen.setPulseDuration(0.5);
+        beakOpen.setPulseDuration(0.5); 
         beakClose.setPulseDuration(0.5);
         headExtend.setPulseDuration(0.5);
         headFlatten.setPulseDuration(0.5);
         raiseFront.setPulseDuration(0.5);
         raiseBack.setPulseDuration(0.5);
-        
 
-        /*
-         * Button numbers: [1: X] [2: A] [3: B] [4: Y] [5: LB] [6: RB] [7: LT] [8: RT]
-         * [9: BACK] [10: START] [11: Left joystick] [12: Right joystick]
-         */
+        
+        // Button numbers: [1: X] [2: A] [3: B] [4: Y] [5: LB] [6: RB] [7: LT] [8: RT] [9: BACK] [10: START] [11: Left joystick] [12: Right joystick]
 
         // Speed modifiers
         if (cont.getRawButton(8)) {
             speedModifierElevator = 0.5;
-            speedModifierDriving = 0.5;
+            speedModifierDriving = 0.5; 
         } else if (cont.getRawButton(6)) {
             speedModifierElevator = 0.2;
             speedModifierDriving = 0.1;
@@ -54,51 +51,45 @@ public class DriveTrain {
         rightMotor.set(-cont.getRawAxis(1) * speedModifierDriving);
 
         // Elevator controls [Back Left buttons]
-        if (cont.getRawButton(5)) {
+        if (cont.getRawButton(5))
             elevator.set(speedModifierElevator);
-        } else if (cont.getRawButton(7)) {
+        else if (cont.getRawButton(7))
             elevator.set(-speedModifierElevator);
-        } else {
+        else
             elevator.set(0);
-        }
 
         // Start compressor [START]
-        if (cont.getRawButtonPressed(10)) {
+        if (cont.getRawButtonPressed(10))
             compressor.start();
-        }
 
         // Stop compressor [BACK]
-        if (cont.getRawButtonPressed(9)) {
+        if (cont.getRawButtonPressed(9))
             compressor.stop();
-        }
 
         // Open beak [Button X]
-        if (cont.getRawButtonPressed(1)) {
+        if (cont.getRawButtonPressed(1))
             beakOpen.startPulse();
-        }
+
         // Close beak [Button A]
-        if (cont.getRawButtonPressed(2)) {
+        if (cont.getRawButtonPressed(2))
             beakClose.startPulse();
-        }
 
         // Flatten head [B]
-        if (cont.getRawButtonPressed(3)) {
+        if (cont.getRawButtonPressed(3))
             headFlatten.startPulse();
 
-        }
         // Extend head [Y]
-        if (cont.getRawButtonPressed(4)) {
+        if (cont.getRawButtonPressed(4))
             headExtend.startPulse();
-        }
 
-        //Raise front [Right joystick]
-        if (cont.getRawButtonPressed(12)) {
+        // Raise front [Right joystick]
+        if (cont.getRawButtonPressed(12))
             raiseFront.startPulse();
 
-        //Raise front [Right joystick]
-        if (cont.getRawButtonPressed(11)) {
+        // Raise front [Right joystick]
+        if (cont.getRawButtonPressed(11))
             raiseBack.startPulse();
-        }
+
     }
 }
-}
+*/
