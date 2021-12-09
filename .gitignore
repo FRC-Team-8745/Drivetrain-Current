@@ -10,9 +10,6 @@ build
 # Gradle
 .gradle
 
-# WPILib
-.wpilib
-
 # VScode
 .vscode
 
