@@ -1,0 +1,21 @@
+# Mac system files
+.DS_store
+
+
+# Java
+bin
+build
+
+
+# Gradle
+.gradle
+
+# WPILib
+.wpilib
+
+# VScode
+.vscode
+
+# random
+.settings
+.project
