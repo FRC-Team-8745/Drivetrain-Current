@@ -1,13 +1,10 @@
 package frc.robot;
 
 import frc.birdie.components;
+import frc.birdie.toggleMove;
 
 public class DrivetrianJoystick {
-    private static boolean beak = true;
-    private static boolean head = true;
-    private static boolean backPistons = false;
-    private static boolean frontPistons = false;
-    private static boolean compressor = true;
+
     private static double left;
     private static double right;
     private static double speedModifierElevator = 0.25;
@@ -33,9 +30,6 @@ public class DrivetrianJoystick {
             speedModifierElevator = 0.25;
             speedModifierDriving = 0.5;
         }
-    }
-
-    {
 
         // Set motors to controller position, using speed modifier
 
@@ -59,51 +53,28 @@ public class DrivetrianJoystick {
         }
 
         // Front piston toggle [11]
-        if (frontPistons) {
-            components.pistonsFront.set(true);
-            frontPistons = false;
-        } else if (!frontPistons) {
-            components.pistonsFront.set(false);
-            frontPistons = true;
+        if (components.cont.getRawButtonPressed(11)) {
+            toggleMove.toggle("frontPistons");
         }
 
         // Back piston toggle [12]
-        if (backPistons) {
-            components.pistonsBack.set(true);
-            backPistons = false;
-        } else if (!backPistons) {
-            components.pistonsBack.set(false);
-            backPistons = true;
+        if (components.cont.getRawButtonPressed(12)) {
+            toggleMove.toggle("backPistons");
         }
 
         // Toggle compressor [8]
-        if (compressor) {
-            components.compressor.start();
-            compressor = false;
-        } else if (!compressor) {
-            components.compressor.stop();
-            compressor = true;
+        if (components.cont.getRawButtonPressed(8)) {
+            toggleMove.toggle("compressor");
         }
-    }
-
-    {
 
         // Toggle beak [6]
-        if (beak) {
-            components.beakClose.startPulse();
-            beak = false;
-        } else if (!beak) {
-            components.beakOpen.startPulse();
-            beak = true;
+        if (components.cont.getRawButtonPressed(6)) {
+            toggleMove.toggle("beak");
         }
 
         // Toggle head [4]
-        if (head) {
-            components.headFlatten.startPulse();
-            head = false;
-        } else if (!head) {
-            components.headExtend.startPulse();
-            head = true;
+        if (components.cont.getRawButtonPressed(4)) {
+            toggleMove.toggle("head");
         }
     }
 }
