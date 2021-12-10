@@ -1,5 +1,6 @@
 package frc.robot;
 
+// Declare imports for the Joystick, Solenoids, Sparks, and Compressor
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
@@ -7,15 +8,24 @@ import edu.wpi.first.wpilibj.Compressor;
 
 public class DrivetrainJoystick {
 
+    // Set default state for the toggleable components
     private static boolean beak = true;
     private static boolean head = true;
     private static boolean backPistons = false;
     private static boolean frontPistons = false;
     private static boolean compressorToggle = true;
+
+    // Declare variables for the two driving motors and set default speed mofifiers
     private static double left;
     private static double right;
     private static double speedModifierDriving = 0.5;
+
+    // Ignore that the line below is orange, it dosen't mean anything and is a
+    // visual error \/
     private static double speedModifierElevator = 0.25;
+
+    // Declare the components used for the robot (Joystick, Solenoids, Sparks, and
+    // Compressor)
     public static Spark leftMotor = new Spark(1);
     public static Spark rightMotor = new Spark(0);
     public static Spark elevator = new Spark(2);
@@ -28,19 +38,28 @@ public class DrivetrainJoystick {
     public static Solenoid pistonsBack = new Solenoid(5);
     public static Compressor compressor = new Compressor();
 
+    // Method that runs when teleop is started
     public static void teleopInit() {
+
+        // Sets the left motor to inverted
         leftMotor.setInverted(true);
+
+        // Set pulse duration for all Solenoids (pneumatics)
         beakOpen.setPulseDuration(0.5);
         beakClose.setPulseDuration(0.5);
         headFlatten.setPulseDuration(0.5);
         pistonsFront.setPulseDuration(0.5);
         pistonsBack.setPulseDuration(0.5);
+
+        // Defaults the compressor to off
         compressor.stop();
     }
 
+    // Main drive method
     public static void drive() {
 
-        // Speed modifiers
+        // Set the speed modifier depending on wether or not the trigger(1) on the
+        // joystick is held down
         if (cont.getRawButton(1)) {
             speedModifierElevator = 0.5;
             speedModifierDriving = 1;
@@ -49,13 +68,31 @@ public class DrivetrainJoystick {
             speedModifierDriving = 0.5;
         }
 
-        // Set motors to controller position, using speed modifier
-
+        // Set variables for the left and right motors to the controllers axis, using
+        // both the up/down and left/right values and some math
         right = -cont.getRawAxis(1) * 0.5 + cont.getRawAxis(0) * 0.5;
         left = -cont.getRawAxis(1) * 0.5 - cont.getRawAxis(0) * 0.5;
 
+        // Set the motors to the speed determined above multiplied by the speed modifier
         leftMotor.set(left * speedModifierDriving);
         rightMotor.set(right * speedModifierDriving);
+
+        /*
+
+        // Example toggle component module
+
+        if (controller button is pressed) {
+            if (toggle variable is true) {
+                Toggle the component;
+                Toggle the value to false;
+            } else if (toggle variable if false) {
+                Toggle the component backwards;
+                Toggle the value to true;
+            }
+        }
+
+        */
+        
 
         // Front piston toggle [11]
         if (cont.getRawButtonPressed(11)) {
