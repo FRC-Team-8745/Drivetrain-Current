@@ -55,6 +55,7 @@ public class DrivetrainJoystick {
         compressor.stop();
     }
 
+    // Main drive method
     public static void drive() {
 
         // Set the speed modifier depending on wether or not the trigger(1) on the
