@@ -1,17 +1,20 @@
 package frc.robot;
 
-import frc.birdie.components;
-import frc.birdie.toggleMove;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Compressor;
 
 public class DrivetrainJoystick {
-    
+
     private static boolean beak = true;
     private static boolean head = true;
     private static boolean backPistons = false;
     private static boolean frontPistons = false;
-    private static boolean compressor = true;
+    private static boolean compressorToggle = true;
     private static double left;
     private static double right;
+    private static double speedModifierDriving = 0.5;
     private static double speedModifierElevator = 0.25;
     public static Spark leftMotor = new Spark(1);
     public static Spark rightMotor = new Spark(0);
@@ -23,11 +26,22 @@ public class DrivetrainJoystick {
     public static Solenoid headExtend = new Solenoid(3);
     public static Solenoid pistonsFront = new Solenoid(4);
     public static Solenoid pistonsBack = new Solenoid(5);
-    
+    public static Compressor compressor = new Compressor();
+
+    public static void teleopInit() {
+        leftMotor.setInverted(true);
+        beakOpen.setPulseDuration(0.5);
+        beakClose.setPulseDuration(0.5);
+        headFlatten.setPulseDuration(0.5);
+        pistonsFront.setPulseDuration(0.5);
+        pistonsBack.setPulseDuration(0.5);
+        compressor.stop();
+    }
+
     public static void drive() {
-        
+
         // Speed modifiers
-        if (components.cont.getRawButton(1)) {
+        if (cont.getRawButton(1)) {
             speedModifierElevator = 0.5;
             speedModifierDriving = 1;
         } else {
@@ -37,72 +51,65 @@ public class DrivetrainJoystick {
 
         // Set motors to controller position, using speed modifier
 
-        right = -components.cont.getRawAxis(1) * 0.5 + components.cont.getRawAxis(0) * 0.5;
-        left = -components.cont.getRawAxis(1) * 0.5 - components.cont.getRawAxis(0) * 0.5;
+        right = -cont.getRawAxis(1) * 0.5 + cont.getRawAxis(0) * 0.5;
+        left = -cont.getRawAxis(1) * 0.5 - cont.getRawAxis(0) * 0.5;
 
-        components.leftMotor.set(left * speedModifierDriving);
-        components.rightMotor.set(right * speedModifierDriving);
+        leftMotor.set(left * speedModifierDriving);
+        rightMotor.set(right * speedModifierDriving);
 
-        speedModifierElevator = 0.25;
-        speedModifierDriving = 0.5;
-        
         // Front piston toggle [11]
-        if (components.cont.getRawButtonPressed(11)) {
+        if (cont.getRawButtonPressed(11)) {
             if (frontPistons) {
-                components.pistonsFront.set(true);
+                pistonsFront.set(true);
                 frontPistons = false;
             } else if (!frontPistons) {
-                components.pistonsFront.set(false);
+                pistonsFront.set(false);
                 frontPistons = true;
             }
         }
-        
+
         // Back piston toggle [12]
-        if (components.cont.getRawButtonPressed(12)) {
+        if (cont.getRawButtonPressed(12)) {
             if (backPistons) {
-                components.pistonsBack.set(true);
+                pistonsBack.set(true);
                 backPistons = false;
             } else if (!backPistons) {
-                components.pistonsBack.set(false);
+                pistonsBack.set(false);
                 backPistons = true;
             }
         }
-        
+
         // Toggle compressor [8]
-        if (components.cont.getRawButtonPressed(8)) {
-            if (compressor) {
-                components.compressor.start();
-                compressor = false;
-            } else if (!compressor) {
-                components.compressor.stop();
-                compressor = true;
+        if (cont.getRawButtonPressed(8)) {
+            if (compressorToggle) {
+                compressor.start();
+                compressorToggle = false;
+            } else if (!compressorToggle) {
+                compressor.stop();
+                compressorToggle = true;
             }
         }
-        
-        
-        
+
         // Toggle beak [6]
-        if (components.cont.getRawButtonPressed(6)) {
+        if (cont.getRawButtonPressed(6)) {
             if (beak) {
-                components.beakClose.startPulse();
+                beakClose.startPulse();
                 beak = false;
             } else if (!beak) {
-                components.beakOpen.startPulse();
+                beakOpen.startPulse();
                 beak = true;
             }
         }
-        
+
         // Toggle head [4]
-        if (components.cont.getRawButtonPressed(4)) {
+        if (cont.getRawButtonPressed(4)) {
             if (head) {
-                components.headFlatten.startPulse();
+                headFlatten.startPulse();
                 head = false;
             } else if (!head) {
-                components.headExtend.startPulse();
+                headExtend.startPulse();
                 head = true;
             }
         }
     }
 }
-
-
