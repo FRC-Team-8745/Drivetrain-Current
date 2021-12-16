@@ -23,11 +23,6 @@ public class DrivetrainXbox {
         // Sets the left motor to inverted
         Components.leftMotor.setInverted(true);
 
-        // Set pulse duration for all Solenoids (pneumatics)
-        Components.beakOpen.setPulseDuration(0.5);
-        Components.beakClose.setPulseDuration(0.5);
-        Components.headFlatten.setPulseDuration(0.5);
-
         // Defaults the compressor to off
         Components.compressor.stop();
     }
@@ -75,20 +70,13 @@ public class DrivetrainXbox {
         if (Components.cont.getRawButtonPressed(9))
             Components.compressor.stop();
 
-        // Open beak [Button X]
+        // Toggle beak [Button X]
         if (Components.cont.getRawButtonPressed(1))
-            Components.beakOpen.startPulse();
+            Components.beak.toggle();
 
-        // Close beak [Button A]
-        if (Components.cont.getRawButtonPressed(2))
-            Components.beakClose.startPulse();
-
-        // Flatten head [B]
+        // Toggle head [B]
         if (Components.cont.getRawButtonPressed(3))
-            Components.headFlatten.startPulse();
+            Components.head.toggle();
 
-        // Extend head [Y]
-        if (Components.cont.getRawButtonPressed(4))
-            Components.headExtend.startPulse();
     }
 }

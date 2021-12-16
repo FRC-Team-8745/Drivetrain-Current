@@ -12,8 +12,6 @@ import frc.robot.CentralComponents.*;
 public class DrivetrainJoystick {
 
     // Set default state for the toggleable components
-    private static boolean beak = true;
-    private static boolean head = true;
     private static boolean backPistons = false;
     private static boolean frontPistons = false;
     private static boolean compressorToggle = true;
@@ -29,13 +27,6 @@ public class DrivetrainJoystick {
 
         // Sets the left motor to inverted
         Components.leftMotor.setInverted(true);
-
-        // Set pulse duration for all Solenoids (pneumatics)
-        Components.beakOpen.setPulseDuration(0.5);
-        Components.beakClose.setPulseDuration(0.5);
-        Components.headFlatten.setPulseDuration(0.5);
-        Components.pistonsFront.setPulseDuration(0.5);
-        Components.pistonsBack.setPulseDuration(0.5);
 
         // Defaults the compressor to off
         Components.compressor.stop();
@@ -109,24 +100,12 @@ public class DrivetrainJoystick {
 
         // Toggle beak [6]
         if (Components.cont.getRawButtonPressed(6)) {
-            if (beak) {
-                Components.beakClose.startPulse();
-                beak = false;
-            } else if (!beak) {
-                Components.beakOpen.startPulse();
-                beak = true;
-            }
+            Components.beak.toggle();
         }
 
         // Toggle head [4]
         if (Components.cont.getRawButtonPressed(4)) {
-            if (head) {
-                Components.headFlatten.startPulse();
-                head = false;
-            } else if (!head) {
-                Components.headExtend.startPulse();
-                head = true;
-            }
+            Components.beak.toggle();
         }
     }
 }
