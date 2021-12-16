@@ -1,10 +1,13 @@
 package frc.robot;
 
-// Declare imports for the Joystick, Solenoids, Sparks, and Compressor
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Compressor;
+//Import the central system for the components
+import frc.robot.CentralComponents.*;
+
+/*
+ * Button numbers: [1: trigger] [2: sidebutton] [3:labeled] [4: labeled] [5:
+ * labeled] [6: labeled] [7: labeled] [8: labeled] [9: labeled] [10: labeled]
+ * [11: labeled] [12: labeled]
+ */
 
 public class DrivetrainJoystick {
 
@@ -21,36 +24,21 @@ public class DrivetrainJoystick {
     private static double speedModifierDriving = 0.5;
     private static double speedModifierElevator = 0.25;
 
-    // Declare the components used for the robot (Joystick, Solenoids, Sparks, and
-    // Compressor)
-    public static Spark leftMotor = new Spark(1);
-    public static Spark rightMotor = new Spark(0);
-    public static Spark elevator = new Spark(2);
-    public static Joystick cont = new Joystick(0);
-    public static Solenoid beakOpen = new Solenoid(0);
-    public static Solenoid beakClose = new Solenoid(1);
-    public static Solenoid headFlatten = new Solenoid(2);
-    public static Solenoid headExtend = new Solenoid(3);
-    public static Solenoid pistonsFront = new Solenoid(4);
-    public static Solenoid pistonsBack = new Solenoid(5);
-    public static Compressor compressor = new Compressor();
-
     // Method that runs when teleop is started
     public static void teleopInit() {
 
         // Sets the left motor to inverted
-        leftMotor.setInverted(true);
+        Components.leftMotor.setInverted(true);
 
         // Set pulse duration for all Solenoids (pneumatics)
-        beakOpen.setPulseDuration(0.5);
-        beakClose.setPulseDuration(0.5);
-        headExtend.setPulseDuration(0.5);
-        headFlatten.setPulseDuration(0.5);
-        pistonsFront.setPulseDuration(0.5);
-        pistonsBack.setPulseDuration(0.5);
+        Components.beakOpen.setPulseDuration(0.5);
+        Components.beakClose.setPulseDuration(0.5);
+        Components.headFlatten.setPulseDuration(0.5);
+        Components.pistonsFront.setPulseDuration(0.5);
+        Components.pistonsBack.setPulseDuration(0.5);
 
         // Defaults the compressor to off
-        compressor.stop();
+        Components.compressor.stop();
     }
 
     // Main drive method
@@ -58,92 +46,85 @@ public class DrivetrainJoystick {
 
         // Set the speed modifier depending on wether or not the trigger(1) on the
         // joystick is held down
-        if (cont.getRawButton(1)) {
+        if (Components.cont.getRawButton(1)) {
             speedModifierElevator = 0.5;
             speedModifierDriving = 1;
         } else {
             speedModifierElevator = 0.25;
             speedModifierDriving = 0.5;
         }
-        // Controls the elevator based on wether or not the top left buttons(5;3) are
-        // pressed
-        if (cont.getRawButton(5))
-            elevator.set(speedModifierElevator);
-        else if (cont.getRawButton(3))
-            elevator.set(-speedModifierElevator);
-        else
-            elevator.set(0);
 
         // Set variables for the left and right motors to the controllers axis, using
         // both the up/down and left/right values and some math
-        right = -cont.getRawAxis(1) * 0.5 + cont.getRawAxis(0) * 0.5;
-        left = -cont.getRawAxis(1) * 0.5 - cont.getRawAxis(0) * 0.5;
+        right = -Components.cont.getRawAxis(1) * 0.5 + Components.cont.getRawAxis(0) * 0.5;
+        left = -Components.cont.getRawAxis(1) * 0.5 - Components.cont.getRawAxis(0) * 0.5;
 
         // Set the motors to the speed determined above multiplied by the speed modifier
-        leftMotor.set(left * speedModifierDriving);
-        rightMotor.set(right * speedModifierDriving);
+        Components.leftMotor.set(left * speedModifierDriving);
+        Components.rightMotor.set(right * speedModifierDriving);
 
-        /*
-         * 
-         * // Example toggle component module
-         * 
-         * if (controller button is pressed) { if (toggle variable is true) { Toggle the
-         * component; Toggle the value to false; } else if (toggle variable if false) {
-         * Toggle the component backwards; Toggle the value to true; } }
-         * 
-         */
+        // Elevator controls [5+3]
+        if (Components.cont.getRawButton(5))
+            // Move elevator upwards using the speed modifier
+            Components.elevator.set(speedModifierElevator);
+        else if (Components.cont.getRawButton(3))
+            // Move elevator downwards using the speed modifier
+            Components.elevator.set(-speedModifierElevator);
+        else
+            // Set elevator speed to 0 if neither of the buttons are pressed
+            Components.elevator.set(0);
 
         // Front piston toggle [11]
-        if (cont.getRawButtonPressed(11)) {
+        if (Components.cont.getRawButtonPressed(11)) {
             if (frontPistons) {
-                pistonsFront.set(true);
+                Components.pistonsFront.set(true);
                 frontPistons = false;
             } else if (!frontPistons) {
-                pistonsFront.set(false);
+                Components.pistonsFront.set(false);
                 frontPistons = true;
             }
         }
 
         // Back piston toggle [12]
-        if (cont.getRawButtonPressed(12)) {
+        if (Components.cont.getRawButtonPressed(12)) {
             if (backPistons) {
-                pistonsBack.set(true);
+                Components.pistonsBack.set(true);
                 backPistons = false;
             } else if (!backPistons) {
-                pistonsBack.set(false);
+                Components.pistonsBack.set(false);
                 backPistons = true;
             }
         }
 
         // Toggle compressor [8]
-        if (cont.getRawButtonPressed(8)) {
+        if (Components.cont.getRawButtonPressed(8)) {
             if (compressorToggle) {
-                compressor.start();
+                Components.compressor.start();
                 compressorToggle = false;
             } else if (!compressorToggle) {
-                compressor.stop();
+                Components.compressor.stop();
                 compressorToggle = true;
             }
         }
 
         // Toggle beak [6]
-        if (cont.getRawButtonPressed(6)) {
+        if (Components.cont.getRawButtonPressed(6)) {
             if (beak) {
-                beakClose.startPulse();
+                Components.beakClose.startPulse();
                 beak = false;
             } else if (!beak) {
-                beakOpen.startPulse();
+                Components.beakOpen.startPulse();
                 beak = true;
             }
         }
 
         // Toggle head [4]
-        if (cont.getRawButtonPressed(4)) {
+        if (Components.cont.getRawButtonPressed(4)) {
             if (head) {
-                headFlatten.startPulse();
+                Components.headFlatten.startPulse();
                 head = false;
             } else if (!head) {
-                headExtend.startPulse();
+                Components.headExtend.startPulse();
                 head = true;
             }
         }
