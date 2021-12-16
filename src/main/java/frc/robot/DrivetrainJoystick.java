@@ -19,9 +19,6 @@ public class DrivetrainJoystick {
     private static double left;
     private static double right;
     private static double speedModifierDriving = 0.5;
-
-    // Ignore that the line below is orange, it dosen't mean anything and is a
-    // visual error \/
     private static double speedModifierElevator = 0.25;
 
     // Declare the components used for the robot (Joystick, Solenoids, Sparks, and
@@ -47,6 +44,7 @@ public class DrivetrainJoystick {
         // Set pulse duration for all Solenoids (pneumatics)
         beakOpen.setPulseDuration(0.5);
         beakClose.setPulseDuration(0.5);
+        headExtend.setPulseDuration(0.5);
         headFlatten.setPulseDuration(0.5);
         pistonsFront.setPulseDuration(0.5);
         pistonsBack.setPulseDuration(0.5);
@@ -67,6 +65,14 @@ public class DrivetrainJoystick {
             speedModifierElevator = 0.25;
             speedModifierDriving = 0.5;
         }
+        // Controls the elevator based on wether or not the top left buttons(5;3) are
+        // pressed
+        if (cont.getRawButton(5))
+            elevator.set(speedModifierElevator);
+        else if (cont.getRawButton(3))
+            elevator.set(-speedModifierElevator);
+        else
+            elevator.set(0);
 
         // Set variables for the left and right motors to the controllers axis, using
         // both the up/down and left/right values and some math
@@ -78,21 +84,14 @@ public class DrivetrainJoystick {
         rightMotor.set(right * speedModifierDriving);
 
         /*
-
-        // Example toggle component module
-
-        if (controller button is pressed) {
-            if (toggle variable is true) {
-                Toggle the component;
-                Toggle the value to false;
-            } else if (toggle variable if false) {
-                Toggle the component backwards;
-                Toggle the value to true;
-            }
-        }
-
-        */
-        
+         * 
+         * // Example toggle component module
+         * 
+         * if (controller button is pressed) { if (toggle variable is true) { Toggle the
+         * component; Toggle the value to false; } else if (toggle variable if false) {
+         * Toggle the component backwards; Toggle the value to true; } }
+         * 
+         */
 
         // Front piston toggle [11]
         if (cont.getRawButtonPressed(11)) {
