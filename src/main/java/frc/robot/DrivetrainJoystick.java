@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 //Import the central system for the components
 import frc.robot.CentralComponents.*;
 
@@ -30,6 +31,10 @@ public class DrivetrainJoystick {
 
         // Defaults the compressor to off
         Components.compressor.stop();
+
+        // Set double solenoid base values
+        Components.head.set(Value.kForward);
+        Components.beak.set(Value.kForward);
     }
 
     // Main drive method
@@ -105,7 +110,7 @@ public class DrivetrainJoystick {
 
         // Toggle head [4]
         if (Components.cont.getRawButtonPressed(4)) {
-            Components.beak.toggle();
+            Components.head.toggle();
         }
     }
 }
