@@ -24,19 +24,19 @@ public class PIDgyro {
         // Calculate error
         double error = (Components.gyro.getRate() - 50);
 
-        //Calculate proportional fix (last deviation)
+        // Calculate proportional fix (last deviation)
         proportionalFix = error * kP;
 
-        //Calculate integral fix (total deviation)
+        // Calculate integral fix (total deviation)
         integralCount = integralCount + error;
         integralFix = integralCount * kI;
 
-        //Calculate derivative fix (rate of deviation)
+        // Calculate derivative fix (rate of deviation)
         derivativeCount = error - last_error;
         last_error = error;
         derivativeFix = derivativeCount * kD;
-        
-        //Set motors to calculated values
+
+        // Set motors to calculated values
         DriveMethods.steeringNumDrive(proportionalFix + integralFix + derivativeFix, speedMod);
     }
 }

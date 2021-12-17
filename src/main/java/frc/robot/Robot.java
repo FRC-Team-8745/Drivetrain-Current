@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    Components.compressor.stop();
     DrivetrainJoystick.teleopInit();
     Components.gyro.calibrate();
     Components.gyro.reset();

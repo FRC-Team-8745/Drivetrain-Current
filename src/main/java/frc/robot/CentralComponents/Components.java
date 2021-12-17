@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI;
+//import edu.wpi.first.wpilibj.SPI;
 
 // Declare the components used for the robot (Joystick, Solenoids, Sparks, and
 // Compressor)
@@ -25,5 +25,5 @@ public class Components {
     public static Compressor compressor = new Compressor();
     public static XboxController Xbox = new XboxController(0);
     public static Joystick contRC = new Joystick(0);
-    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 }
