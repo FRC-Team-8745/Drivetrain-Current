@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    Components.compressor.setClosedLoopControl(false);
     Components.gyro.calibrate();
   }
 
