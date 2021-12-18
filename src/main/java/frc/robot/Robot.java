@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    Components.compressor.setClosedLoopControl(false);
+    Components.init();
   }
 
   @Override
@@ -39,7 +39,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    DrivetrainJoystick.teleopInit();
   }
 
   @Override
