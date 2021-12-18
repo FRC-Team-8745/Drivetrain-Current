@@ -11,12 +11,7 @@ import frc.robot.CentralComponents.*;
  */
 
 public class DrivetrainJoystick {
-
-    // Set default state for the toggleable components
-    private static boolean backPistons = false;
-    private static boolean frontPistons = false;
-    private static boolean compressorToggle = true;
-
+    
     // Declare variables for the two driving motors and set default speed mofifiers
     private static double left;
     private static double right;
@@ -30,6 +25,7 @@ public class DrivetrainJoystick {
         Components.leftMotor.setInverted(true);
 
         // Defaults the compressor to off
+        Components.compressor.setClosedLoopControl(false);
         Components.compressor.stop();
 
         // Set double solenoid base values
@@ -72,35 +68,21 @@ public class DrivetrainJoystick {
 
         // Front piston toggle [11]
         if (Components.cont.getRawButtonPressed(11)) {
-            if (frontPistons) {
-                Components.pistonsFront.set(true);
-                frontPistons = false;
-            } else if (!frontPistons) {
-                Components.pistonsFront.set(false);
-                frontPistons = true;
-            }
+            Components.pistonsFront.toggle();
         }
 
         // Back piston toggle [12]
         if (Components.cont.getRawButtonPressed(12)) {
-            if (backPistons) {
-                Components.pistonsBack.set(true);
-                backPistons = false;
-            } else if (!backPistons) {
-                Components.pistonsBack.set(false);
-                backPistons = true;
-            }
+            Components.pistonsBack.toggle();
         }
 
         // Toggle compressor [8]
         if (Components.cont.getRawButtonPressed(8)) {
-            if (compressorToggle) {
-                Components.compressor.start();
-                compressorToggle = false;
-            } else if (!compressorToggle) {
+            if (Components.compressor.enabled()) 
                 Components.compressor.stop();
-                compressorToggle = true;
-            }
+             else 
+                Components.compressor.start();
+            
         }
 
         // Toggle beak [6]
