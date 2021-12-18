@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    Components.gyro.calibrate();
   }
 
   @Override
@@ -39,14 +40,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     DrivetrainJoystick.teleopInit();
-    Components.gyro.calibrate();
-    Components.gyro.reset();
   }
 
   @Override
   public void teleopPeriodic() {
     //DrivetrainJoystick.drive();
-    PIDtest.test();
+    if (Components.cont.getRawButton(11)) {
+      PIDgyro.gyroDrive();
+    }
   }
 
   @Override

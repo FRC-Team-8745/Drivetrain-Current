@@ -39,6 +39,9 @@ public class DrivetrainJoystick {
 
         // Defaults the compressor to off
         Components.compressor.stop();
+        
+        // Resets the gyro
+        Components.gyro.reset();
     }
 
     // Main drive method

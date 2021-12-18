@@ -19,10 +19,14 @@ public class PIDgyro {
     private static double integralCount;
     private static double derivativeCount;
 
-    public static void gyroDrive(double speedMod) {
+    public static void gyroInit() {
+        Components.gyro.reset();
+    }
+
+    public static void gyroDrive() {
 
         // Calculate error
-        double error = (Components.gyro.getRate() - 50);
+        double error = (Components.gyro.getAngle() - 50);
 
         //Calculate proportional fix (last deviation)
         proportionalFix = error * kP;
@@ -37,6 +41,7 @@ public class PIDgyro {
         derivativeFix = derivativeCount * kD;
         
         //Set motors to calculated values
-        DriveMethods.steeringNumDrive(proportionalFix + integralFix + derivativeFix, speedMod);
+        Components.leftMotor.set(0.2 + (proportionalFix + integralFix + derivativeFix));
+        Components.rightMotor.set(0.2 - (proportionalFix + integralFix + derivativeFix));
     }
 }
