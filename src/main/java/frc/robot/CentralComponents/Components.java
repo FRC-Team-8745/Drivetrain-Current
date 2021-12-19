@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 // Declare the components used for the robot (Joystick, Solenoids, Sparks, and
 // Compressor)
 public class Components {
-    // Method declarations
+    // Component declarations
 
     // Double solenoids for the beak and head
     public static DoubleSolenoid beak = new DoubleSolenoid(0, 1);

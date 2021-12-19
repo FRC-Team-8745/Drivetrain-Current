@@ -57,6 +57,7 @@ public class DrivetrainJoystick {
 
         // Toggle compressor [8]
         if (Components.cont.getRawButtonPressed(8)) {
+            // Read if the compressor is enabled, then use that information to disable or enable it when the button is pressed
             if (Components.compressor.enabled())
                 Components.compressor.stop();
             else
