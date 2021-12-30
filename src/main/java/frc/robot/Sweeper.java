@@ -26,13 +26,13 @@ public class Sweeper {
         left.set(-driver.getRawAxis(1) *speed);
         right.set(driver.getRawAxis(3)*speed);
         //graber on Sweeper
-        if (driver.getRawButton(8))
+        if (driver.getRawButton(8)) {
             grab.set(grabber);
-        else if (driver.getRawButton(7))
+        } else if (driver.getRawButton(7)) {
             grab.set(-grabber);
-        else
+        } else {
             grab.set(0);
-        
+        }
         //piston controls
         if (driver.getRawButtonPressed(2)){
             if (compressorT){
