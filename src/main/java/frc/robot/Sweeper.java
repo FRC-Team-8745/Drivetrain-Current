@@ -14,7 +14,7 @@ public class Sweeper {
         ComponentsSweeper.leftMotor.set((ComponentsSweeper.Xbox.getRawAxis(1) * speed));
         ComponentsSweeper.rightMotor.set((ComponentsSweeper.Xbox.getRawAxis(3) * speed));
 
-        // graber on Sweeper
+        // sweeper on Sweeper
         if (ComponentsSweeper.Xbox.getRawButton(8))
             ComponentsSweeper.broom.set(grabber);
         else if (ComponentsSweeper.Xbox.getRawButton(7))
