@@ -32,6 +32,5 @@ public class Sweeper {
         }
         if (ComponentsSweeper.Xbox.getRawButtonPressed(3))
             ComponentsSweeper.fourBar.toggle();
-
     }
 }
