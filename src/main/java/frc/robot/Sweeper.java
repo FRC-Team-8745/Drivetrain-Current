@@ -1,56 +1,37 @@
 package frc.robot;
 
-//import your motor controllers, compressors, solenoids, and physical controllers using this pattern.
-    import edu.wpi.first.wpilibj.XboxController;
-    import edu.wpi.first.wpilibj.Spark;
-    import edu.wpi.first.wpilibj.Compressor;
-    import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.CentralComponents.ComponentsSweeper;
+
+// Button numbers: [1: X] [2: A] [3: B] [4: Y] [5: LB] [6: RB] [7: LT] [8: RT]
+// [9: BACK] [10: START] [11: Left joystick] [12: Right joystick]
 
 public class Sweeper {
-//set your pistons to default positions
-    public static boolean fourBarS = false;
-    public static boolean compressorT = false;
-//name your motors, controller, and make the public static void drive here.
-    public static Spark left = new Spark(0);
-    public static Spark right = new Spark(1);
-    public static Spark grab = new Spark(2);
-    public static XboxController driver = new XboxController(3);
-    public static Compressor compressor = new Compressor();
-    public static Solenoid fourBarOpen = new Solenoid(0);
-    public static Solenoid fourBarClose = new Solenoid(1);
-    public static void drive(){
-//set your speeds
-    double speed = 0.5;
-    double grabber = 0.2;
-    //drivetrain
-        left.set(-driver.getRawAxis(1) *speed);
-        right.set(driver.getRawAxis(3)*speed);
-        //graber on Sweeper
-        if (driver.getRawButton(8)){
-            grab.set(grabber);
-        } else if (driver.getRawButton(7)); {
-            grab.set(-grabber);
-        }  {
-            grab.set(0);
+    public static void drive() {
+        // set your speeds
+        double speed = 0.4;
+        double grabber = 0.4;
+        // drivetrain
+        ComponentsSweeper.leftMotor.set((ComponentsSweeper.Xbox.getRawAxis(1) * speed));
+        ComponentsSweeper.rightMotor.set((ComponentsSweeper.Xbox.getRawAxis(3) * speed));
+
+        // sweeper on Sweeper
+        if (ComponentsSweeper.Xbox.getRawButton(8))
+            ComponentsSweeper.broom.set(grabber);
+        else if (ComponentsSweeper.Xbox.getRawButton(7))
+            ComponentsSweeper.broom.set(-grabber);
+        else
+            ComponentsSweeper.broom.set(0);
+
+        // piston controls
+        if (ComponentsSweeper.Xbox.getRawButtonPressed(2)) {
+            if (ComponentsSweeper.compressor.enabled())
+                ComponentsSweeper.compressor.stop();
+            else
+                ComponentsSweeper.compressor.start();
+
         }
-        //piston controls
-        if (driver.getRawButtonPressed(2)){
-            if (compressorT) {
-                compressor.start();
-                compressorT = false;
-            } else if (!compressorT) {
-                compressor.stop();
-                compressorT = true;
-            }
-        }
-            if (driver.getRawButtonPressed(3)) {
-                if (fourBarS) {
-                    fourBarClose.startPulse();
-                    fourBarS = false;
-                } else if (!fourBarS) {
-                    fourBarOpen.startPulse();
-                    fourBarS = true;
-                }
-            }
-        }
+        if (ComponentsSweeper.Xbox.getRawButtonPressed(3))
+            ComponentsSweeper.fourBar.toggle();
+
     }
+}
