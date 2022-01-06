@@ -32,9 +32,9 @@ public class DrivetrainJoystick {
         // both the up/down and left/right values and some math; multiplied by the speed
         // modifier
         Components.leftMotor.set(
-                (-Components.cont.getRawAxis(1) * 0.5 + Components.cont.getRawAxis(0) * 0.5) * speedModifierDriving);
-        Components.rightMotor.set(
                 (-Components.cont.getRawAxis(1) * 0.5 - Components.cont.getRawAxis(0) * 0.5) * speedModifierDriving);
+        Components.rightMotor.set(
+                (-Components.cont.getRawAxis(1) * 0.5 + Components.cont.getRawAxis(0) * 0.5) * speedModifierDriving);
 
         // Elevator controls [5+3]
         if (Components.cont.getRawButton(5))
