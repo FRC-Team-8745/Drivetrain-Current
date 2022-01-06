@@ -32,6 +32,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    // uncomment below if you want to use autonomous
+    //autonomous.drive();
   }
 
   @Override
