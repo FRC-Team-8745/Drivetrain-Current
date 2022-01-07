@@ -49,15 +49,7 @@ public class Components {
         // Sets the left motor to inverted
         leftMotor.setInverted(true);
 
-        /*
-         * Closed loop control automatically enables the compressor at 0 psi and
-         * disables it at ~120 psi. This isn't useful in our programs, as we only ever
-         * charge it to ~40 psi. Open loop control allows only manual enabling/disabling
-         * of the compressor, which is what we use.
-         */
-
-        // Defaults the compressor to off and to open loop control
-        compressor.setClosedLoopControl(false);
+        // Defaults the compressor to off
         compressor.stop();
 
     }
