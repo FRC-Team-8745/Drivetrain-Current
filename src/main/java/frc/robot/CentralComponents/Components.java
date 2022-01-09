@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 
 // Declare the components used for the robot (Joystick, Solenoids, Sparks, and
 // Compressor)
@@ -35,13 +37,20 @@ public class Components {
     public static XboxController Xbox = new XboxController(0);
     public static Joystick contRC = new Joystick(0);
 
+    // Gyro
+    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
+    // Encoders
+    public static Encoder rightMotorEncoder = new Encoder(6,7, false, Encoder.EncodingType.k4X);
+    public static Encoder leftMotorEncoder = new Encoder(8,9, true, Encoder.EncodingType.k4X);
+
     // This method runs when the robot is first turned on and it sets the default
     // positions, states, and values of all components
     public static void init() {
         // Set double solenoid base values
         head.set(Value.kForward);
         beak.set(Value.kForward);
-
+        
         // Set single solenoid base values
         pistonsFront.set(false);
         pistonsBack.set(false);

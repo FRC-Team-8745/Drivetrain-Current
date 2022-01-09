@@ -24,7 +24,6 @@ public class PIDgyro {
     }
 
     public static void gyroDrive() {
-
         // Calculate error
         double error = (Components.gyro.getAngle() - 50);
 
@@ -41,7 +40,12 @@ public class PIDgyro {
         derivativeFix = derivativeCount * kD;
         
         //Set motors to calculated values
-        Components.leftMotor.set(0.2 + (proportionalFix + integralFix + derivativeFix));
-        Components.rightMotor.set(0.2 - (proportionalFix + integralFix + derivativeFix));
+        double motorSpeed = (0.2 - Math.abs(proportionalFix + integralFix + derivativeFix));
+        if (motorSpeed >= 0.0 && motorSpeed <= 0.5) {
+        Components.leftMotor.set(motorSpeed);
+        Components.rightMotor.set(motorSpeed);
+        } else {
+            System.out.println(motorSpeed);
+        }
     }
 }

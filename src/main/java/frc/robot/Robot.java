@@ -24,18 +24,24 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     Components.init();
     //ComponentsSweeper.init();
+    Components.gyro.calibrate();
+    Components.gyro.reset();
   }
 
   @Override
   public void robotPeriodic() {
+    shuffleboard.displayContent();
   }
 
   @Override
   public void autonomousInit() {
+    Components.gyro.reset();
+    Components.gyro.calibrate();
   }
 
   @Override
   public void autonomousPeriodic() {
+    PIDgyro.gyroDrive();
   }
 
   @Override
@@ -57,9 +63,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    Components.init();
   }
 
   @Override
   public void testPeriodic() {
+    shuffleboard.displayContent();
   }
 }
