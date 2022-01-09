@@ -40,7 +40,7 @@ public class PIDgyro {
         derivativeFix = derivativeCount * kD;
         
         //Set motors to calculated values
-        double motorSpeed = (0.2 - Math.abs(proportionalFix + integralFix + derivativeFix));
+        double motorSpeed = (0.2 + Math.abs(proportionalFix + integralFix + derivativeFix));
         if (motorSpeed >= 0.0 && motorSpeed <= 0.5) {
         Components.leftMotor.set(motorSpeed);
         Components.rightMotor.set(motorSpeed);

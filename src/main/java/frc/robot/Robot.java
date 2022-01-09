@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     Components.gyro.reset();
     Components.gyro.calibrate();
+    Components.init();
   }
 
   @Override

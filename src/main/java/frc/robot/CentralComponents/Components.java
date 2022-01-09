@@ -41,16 +41,19 @@ public class Components {
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
     // Encoders
-    public static Encoder rightMotorEncoder = new Encoder(6,7, false, Encoder.EncodingType.k4X);
-    public static Encoder leftMotorEncoder = new Encoder(8,9, true, Encoder.EncodingType.k4X);
+    public static Encoder rightEncoder = new Encoder(6, 7, false, Encoder.EncodingType.k4X);
+    public static Encoder leftEncoder = new Encoder(8, 9, true, Encoder.EncodingType.k4X);
 
     // This method runs when the robot is first turned on and it sets the default
     // positions, states, and values of all components
     public static void init() {
+        // Reset Encoders
+        rightEncoder.reset();
+        leftEncoder.reset();
         // Set double solenoid base values
         head.set(Value.kForward);
         beak.set(Value.kForward);
-        
+
         // Set single solenoid base values
         pistonsFront.set(false);
         pistonsBack.set(false);
